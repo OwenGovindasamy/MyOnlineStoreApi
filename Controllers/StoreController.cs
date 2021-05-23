@@ -13,13 +13,15 @@ namespace MyOnlineStoreAPI.Controllers
     [ApiController]
     public class StoreController : ControllerBase
     {
+        private readonly JwtConfig _jwtConfig;
         private readonly ApplicationDbContext _context;
         private readonly IDatastore _datastore;
 
-        public StoreController(ApplicationDbContext context, IDatastore datastore)
+        public StoreController(ApplicationDbContext context, IDatastore datastore, IOptionsMonitor<JwtConfig> optionsMonitor)
         {
             _context = context;
             _datastore = datastore;
+            _jwtConfig = optionsMonitor.CurrentValue;
         }
 
         [HttpGet]
