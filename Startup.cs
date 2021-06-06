@@ -19,7 +19,6 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
-using MyOnlineStoreAPI.Data;
 
 namespace MyOnlineStoreAPI
 {
@@ -45,7 +44,7 @@ namespace MyOnlineStoreAPI
                 options.SignIn.RequireConfirmedAccount = false;
                 options.Password.RequireUppercase = false;
                 options.Password.RequireLowercase = false; //allow weaker passwords
-                options.Password.RequireNonAlphanumeric = false; }).AddEntityFrameworkStores<MyOnlineStoreAPIContext>().AddSignInManager<SignInManager<IdentityUser>>();
+                options.Password.RequireNonAlphanumeric = false; }).AddEntityFrameworkStores<ApplicationDbContext>().AddSignInManager<SignInManager<IdentityUser>>();
 
             services.Configure<PasswordHasherOptions>(options => options.CompatibilityMode = PasswordHasherCompatibilityMode.IdentityV2);
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("bgwnhzhcoejxupilcsxbkrkvbquanakz")); // this can be saved in appsettings.json 

@@ -28,7 +28,7 @@ namespace MyOnlineStoreAPI.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("login")]
+        [HttpGet("login")]
         public async Task<ActionResult<UserToken>> Login(string Email, string Password)
         {
             var user = await _userManager.FindByEmailAsync(Email);
