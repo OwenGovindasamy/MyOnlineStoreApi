@@ -1,5 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using MyOnlineStoreAPI.Configuration;
 using MyOnlineStoreAPI.Interfaces;
 using MyOnlineStoreAPI.Models;
 using System;
@@ -9,21 +13,17 @@ using System.Threading.Tasks;
 
 namespace MyOnlineStoreAPI.Controllers
 {
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Route("api/[controller]")]
     [ApiController]
     public class StoreController : ControllerBase
     {
-        private readonly JwtConfig _jwtConfig;
-        private readonly ApplicationDbContext _context;
         private readonly IDatastore _datastore;
 
-        public StoreController(ApplicationDbContext context, IDatastore datastore, IOptionsMonitor<JwtConfig> optionsMonitor)
+        public StoreController(IDatastore datastore)
         {
-            _context = context;
             _datastore = datastore;
-            _jwtConfig = optionsMonitor.CurrentValue;
         }
-
         [HttpGet]
         public async Task<ActionResult<List<StoreItems>>> GetStoreItems()
         {
